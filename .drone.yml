@@ -1,76 +1,5 @@
 ---
 kind: pipeline
-name: Plan & Check
-
-steps:
-
-- name: Terraform init and plan
-  image: tkam8/tfansible:latest
-  environment:
-    GOOGLE_CREDENTIALS:
-      from_secret: gcp_creds
-    GCE_SSH_KEY:
-      from_secret: gcp_ssh_key
-    TF_VAR_gke_username:
-      from_secret: gke_username
-    TF_VAR_gke_password:
-      from_secret: gke_password
-  commands:
-  # Below commands are for debug purposes only
-  # - echo $${BIGIP_PASS}
-  # - echo $${TF_VAR_gke_username}
-  # - echo $${TF_VAR_gke_password}
-  - pwd
-  - ls
-  - ls terraform-ansible-google/non-prod/
-  - cd terraform-ansible-google/non-prod/
-  - terragrunt plan-all -input=false
-
-- name: SSH key preparation for Ansible Plugin
-  image: tkam8/tfansible:latest
-  environment:
-    GCE_SSH_KEY:
-      from_secret: gcp_ssh_key
-  commands: 
-  # Below commands are for debug purposes only
-  # - ls /drone/src/
-  # - cat terraform-ansible-google/NGINX_F5_CDN/ansible/playbooks/inventory/hosts
-  # - cat /drone/src/kubeconfig
-  # - cat terraform-ansible-google/NGINX_F5_CDN/ansible/playbooks/group_vars/F5_systems/vars
-  # Write the ssh key to disk
-  - mkdir /drone/src/gcp
-  - printenv GCE_SSH_KEY > /drone/src/gcp/gcp_ssh_key
-  - chmod 600 /drone/src/gcp/gcp_ssh_key
-
-- name: Check Ansible playbook Syntax (asia)
-  image: tkam8/tfansible:latest
-  commands: 
-  - cd terraform-ansible-google/non-prod/asia-northeast1/stage/ansible/playbooks/
-  - ansible-playbook --inventory none --syntax-check -vv site.yml
-
-# - name: Slack notification
-#   image: plugins/slack
-#   when:
-#     status: [ success, failure ]
-#   settings:
-#     webhook:
-#       from_secret: slack_webhook
-#     channel: sandbox
-#     template: >
-#       {{#success build.status}}
-#         Plan & Syntax Check for build {{build.number}} succeeded. OK to merge.
-#       {{else}}
-#         Plan & Syntax Check for build {{build.number}} failed. Fix me please.
-#       {{/success}}
-
-trigger:
-  branch:
-  - master
-  event:
-  - pull_request
-
----
-kind: pipeline
 name: Apply templates
 
 steps:
@@ -130,3 +59,75 @@ trigger:
   - master
   event:
   - push
+  
+# ---
+# kind: pipeline
+# name: Plan & Check
+
+# steps:
+
+# - name: Terraform init and plan
+#   image: tkam8/tfansible:latest
+#   environment:
+#     GOOGLE_CREDENTIALS:
+#       from_secret: gcp_creds
+#     GCE_SSH_KEY:
+#       from_secret: gcp_ssh_key
+#     TF_VAR_gke_username:
+#       from_secret: gke_username
+#     TF_VAR_gke_password:
+#       from_secret: gke_password
+#   commands:
+#   # Below commands are for debug purposes only
+#   # - echo $${BIGIP_PASS}
+#   # - echo $${TF_VAR_gke_username}
+#   # - echo $${TF_VAR_gke_password}
+#   - pwd
+#   - ls
+#   - ls terraform-ansible-google/non-prod/
+#   - cd terraform-ansible-google/non-prod/
+#   - terragrunt plan-all -input=false
+
+# - name: SSH key preparation for Ansible Plugin
+#   image: tkam8/tfansible:latest
+#   environment:
+#     GCE_SSH_KEY:
+#       from_secret: gcp_ssh_key
+#   commands: 
+#   # Below commands are for debug purposes only
+#   # - ls /drone/src/
+#   # - cat terraform-ansible-google/NGINX_F5_CDN/ansible/playbooks/inventory/hosts
+#   # - cat /drone/src/kubeconfig
+#   # - cat terraform-ansible-google/NGINX_F5_CDN/ansible/playbooks/group_vars/F5_systems/vars
+#   # Write the ssh key to disk
+#   - mkdir /drone/src/gcp
+#   - printenv GCE_SSH_KEY > /drone/src/gcp/gcp_ssh_key
+#   - chmod 600 /drone/src/gcp/gcp_ssh_key
+
+# - name: Check Ansible playbook Syntax (asia)
+#   image: tkam8/tfansible:latest
+#   commands: 
+#   - cd terraform-ansible-google/non-prod/asia-northeast1/stage/ansible/playbooks/
+#   - ansible-playbook --inventory none --syntax-check -vv site.yml
+
+# - name: Slack notification
+#   image: plugins/slack
+#   when:
+#     status: [ success, failure ]
+#   settings:
+#     webhook:
+#       from_secret: slack_webhook
+#     channel: sandbox
+#     template: >
+#       {{#success build.status}}
+#         Plan & Syntax Check for build {{build.number}} succeeded. OK to merge.
+#       {{else}}
+#         Plan & Syntax Check for build {{build.number}} failed. Fix me please.
+#       {{/success}}
+
+# trigger:
+#   branch:
+#   - master
+#   event:
+#   - pull_request
+
