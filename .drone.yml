@@ -16,7 +16,7 @@ steps:
     TF_VAR_gke_password:
       from_secret: gke_password
   commands:
-  - cd terraform-ansible-google/non-prod/
+  - cd terraform-ansible-google/
   - terragrunt apply-all --terragrunt-non-interactive -auto-approve
   #- terragrunt destroy-all --terragrunt-non-interactive -force
 
@@ -34,8 +34,8 @@ steps:
 - name: Apply Ansible playbook (asia)
   image: tkam8/tfansible:latest
   commands: 
-  - ls terraform-ansible-google/non-prod/asia-northeast1/stage/ansible/
-  - cd terraform-ansible-google/non-prod/asia-northeast1/stage/ansible/playbooks/
+  - ls terraform-ansible-google/asia-northeast1/stage/ansible/
+  - cd terraform-ansible-google/asia-northeast1/stage/ansible/playbooks/
   - ansible-playbook --inventory inventory/hosts -vvvv site.yml
 
 
@@ -59,7 +59,7 @@ trigger:
   - master
   event:
   - push
-  
+
 # ---
 # kind: pipeline
 # name: Plan & Check
