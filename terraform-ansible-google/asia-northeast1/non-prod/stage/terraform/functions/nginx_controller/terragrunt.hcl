@@ -8,7 +8,7 @@ terraform {
 
 # Include all settings from the root terragrunt.hcl file
 include {
-  path = "../../../../terragrunt.hcl"
+  path = "../../../../../terragrunt.hcl"
 }
 
 dependency "vpc" {

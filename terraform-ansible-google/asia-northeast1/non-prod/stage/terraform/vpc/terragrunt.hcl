@@ -10,7 +10,7 @@ terraform {
 
 # Include all settings from the root terragrunt.hcl file
 include {
-  path = "../../../terragrunt.hcl"
+  path = "../../../../terragrunt.hcl"
 }
 
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above
