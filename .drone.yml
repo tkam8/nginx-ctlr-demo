@@ -16,7 +16,9 @@ steps:
     TF_VAR_gke_password:
       from_secret: gke_password
   commands:
+  - ls
   - cd terraform-ansible-google/
+  - ls
   - terragrunt apply-all --terragrunt-non-interactive -auto-approve
   #- terragrunt destroy-all --terragrunt-non-interactive -force
 
