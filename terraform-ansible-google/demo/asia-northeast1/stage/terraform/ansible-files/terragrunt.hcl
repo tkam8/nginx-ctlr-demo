@@ -28,9 +28,7 @@ dependency "controller" {
   config_path = "../functions/nginx_controller"
 
   mock_outputs = {
-    nginx_public_ip   = "networkName"
-    nginx_public_ip   = "4.4.4.4"
-    nginx_private_ip  = "5.5.5.5"
+    ubuntu_public_ip   = "4.4.4.4"
   }
 }
 
