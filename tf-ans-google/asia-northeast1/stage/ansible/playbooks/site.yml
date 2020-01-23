@@ -1,0 +1,29 @@
+
+---
+
+- name: NGINX initialization
+  hosts: gcp_ubuntu_systems
+  become: yes
+  become_method: sudo
+  become_user: root
+  connection: ssh
+  gather_facts: true
+  roles: 
+    - ubuntu_initialize
+
+
+# - name: GKE nginxweb
+#   hosts: gke_systems
+#   connection: local
+#   gather_facts: true
+#   roles:
+#    - app1_gke_onboarding
+
+# - name: GCP NGINX Cache Config1
+#   hosts: gcp_nginx_systems
+#   become: yes
+#   become_method: sudo
+#   connection: ssh
+#   gather_facts: true
+#   roles:
+#    - nginx_configure

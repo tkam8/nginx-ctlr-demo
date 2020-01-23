@@ -1,0 +1,62 @@
+---
+
+# debugging
+- name: "Ansible | Print a variable"
+  debug:
+    msg: "The role path is {{ role_path }}"
+
+# Username and password will be grabbed from env var K8S_AUTH_USERNAME and K8S_AUTH_PASSWORD
+- name: Create a k8s namespace
+  k8s:
+    name: upstream2
+    api_version: v1
+    host: "{{ gke_url }}"
+    kubeconfig: "{{ role_path }}/../../../kubeconfig"
+    kind: Namespace
+    state: present
+
+- name: Create a NGINX pod by reading the definition from a local file and wait to become ready
+  k8s:
+    state: present
+    kubeconfig: "{{ role_path }}/../../../kubeconfig"
+    src: "roles/app1_gke_onboarding/templates/pod_nginx.yml"
+    wait: yes
+    wait_condition: 
+      type=Available
+      status=True
+    wait_timeout: 240
+
+- name: Create a NGINX Service by reading the definition from a local file and wait to become ready
+  k8s:
+    state: present
+    kubeconfig: "{{ role_path }}/../../../kubeconfig"
+    src: "roles/app1_gke_onboarding/templates/service_nginx.yml"
+
+# - name: Get NGINX service
+#   k8s_facts:
+#     api_version: v1
+#     kind: Service
+#     name: nginx-upstream2
+#     namespace: upstream2
+#     kubeconfig: "{{ role_path }}/../../../kubeconfig"
+#   register: nginx_svc
+
+- name: Get NGINX endpoints for deployment created earlier
+  k8s_facts:
+    api_version: v1
+    kind: Endpoints
+    name: nginx-upstream2
+    namespace: upstream2
+    kubeconfig: "{{ role_path }}/../../../kubeconfig"
+  register: nginx_ep
+
+# - name: debug 
+#   debug: var=nginx_ep
+
+- name: Generate list of NGINX endpoints from the registered variable nginx_ep
+  # Currently this assumes 1 IP address in the list 
+  set_fact: 
+    ep_list: "{{ [nginx_ep.resources[0].subsets[0].addresses[0].ip, nginx_ep.resources[0].subsets[0].ports[0].port]|join(':') }}"
+
+- name: debug 
+  debug: var=ep_list

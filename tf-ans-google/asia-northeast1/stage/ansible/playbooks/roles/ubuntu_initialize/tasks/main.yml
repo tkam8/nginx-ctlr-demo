@@ -1,0 +1,28 @@
+---
+
+#check systems are debian (ubuntu) and update the systems first
+
+- name: Fail if not running on Debian
+  fail: msg="These tasks should only be run on Debian/Ubuntu servers"
+  when: ansible_os_family != "Debian"
+
+# - name: Wait for any possibly running unattended upgrade to finish
+#   raw: systemd-run --property="After=apt-daily.service apt-daily-upgrade.service" --wait /bin/true
+
+# - name: update and upgrade packages via apt
+#   apt:
+#     upgrade: yes
+#     update_cache: yes
+#   register: apt_status
+#   until: apt_status is success
+#   delay: 5
+#   retries: 10
+ 
+# - name: ensure nginx is at the latest version
+#   apt: 
+#     name=nginx state=latest
+
+# - name: start nginx
+#   service:
+#     name: nginx
+#     state: started

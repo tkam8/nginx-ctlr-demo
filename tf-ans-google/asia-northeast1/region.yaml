@@ -1,0 +1,7 @@
+# These variables apply to this entire region. They are automatically pulled in using yamldecode and merged into
+# the inputs of the root terragrunt.hcl file.
+region: "asia-northeast1"
+
+# The zone to create the instances in. Must be within the subnetwork region
+zone: "asia-northeast1-b"
+
