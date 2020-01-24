@@ -1,12 +1,12 @@
 ---
 
-#check systems are debian (ubuntu) and update the systems first
+# Check systems are debian (ubuntu) and update the systems first
 
 - name: Fail if not running on Debian
   fail: msg="These tasks should only be run on Debian/Ubuntu servers"
   when: ansible_os_family != "Debian"
 
-#Disable swap since kubernetes can't work with swap enabled (in order for the kubelet to work properly)
+# Disable swap since Kubernetes can't work with swap enabled (in order for the kubelet to work properly)
 
 - name: Disable swap (if configured) (1/2)
   command: swapoff -a

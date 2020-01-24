@@ -1,6 +1,6 @@
 ---
 
-# debugging
+# Debugging
 - name: "Ansible | Print a variable"
   debug:
     msg: "The role path is {{ role_path }}"
