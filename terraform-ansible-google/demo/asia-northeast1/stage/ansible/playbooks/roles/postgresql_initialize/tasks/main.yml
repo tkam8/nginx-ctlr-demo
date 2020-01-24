@@ -64,7 +64,7 @@
     db: db1
     name: terry
     password: "{{ POSTGRESQL_PASSWORD }}"
-    priv: "ALL"
+    priv: ALL
     state: present
     expires: infinity
 
