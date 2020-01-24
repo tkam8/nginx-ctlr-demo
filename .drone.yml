@@ -37,7 +37,6 @@ steps:
     POSTGRESQL_PASS:
       from_secret: postgresql_password
   commands: 
-  #- ls terraform-ansible-google/demo/asia-northeast1/stage/ansible/
   #- cat terraform-ansible-google/demo/asia-northeast1/stage/ansible/playbooks/inventory/hosts
   - cat terraform-ansible-google/demo/asia-northeast1/stage/ansible/playbooks/group_vars/F5_systems/vars
   - cd terraform-ansible-google/demo/asia-northeast1/stage/ansible/playbooks/
