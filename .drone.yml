@@ -39,6 +39,7 @@ steps:
   commands: 
   #- ls terraform-ansible-google/demo/asia-northeast1/stage/ansible/
   #- cat terraform-ansible-google/demo/asia-northeast1/stage/ansible/playbooks/inventory/hosts
+  - env
   - cd terraform-ansible-google/demo/asia-northeast1/stage/ansible/playbooks/
   - ansible-playbook --inventory inventory/hosts -vvvv site.yml
 
