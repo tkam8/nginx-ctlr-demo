@@ -5,13 +5,19 @@
   fail: msg="These tasks should only be run on Debian/Ubuntu servers"
   when: ansible_os_family != "Debian"
 
-# Install prerequisites for postgresql_db ansible module
-- name: Update repositories cache and install latest "psycopg2" package
+# Install prerequisites for pip ansible module
+- name: Update repositories cache and install latest "python-pip" package
   apt:
     pkg: 
-      - python-psycopg2
+      - python-pip
+      - python-setuptools
     state: latest
     update_cache: yes
+
+# Install prerequisites for postgresql_db ansible module
+- name: Update repositories cache and install latest "psycopg2" package
+  pip:
+    name: psycopg2
 
 # Ensure latest versions of prerequisites for PostgreSQL
 - name: Update repositories cache and install latest prerequisite packages
