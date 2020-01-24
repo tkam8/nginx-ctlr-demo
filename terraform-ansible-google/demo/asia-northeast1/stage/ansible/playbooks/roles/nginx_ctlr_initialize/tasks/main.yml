@@ -1,6 +1,6 @@
 ---
 
-# Check systems are debian (ubuntu) and update the systems first
+# Check systems are debian (ubuntu) 
 
 - name: Fail if not running on Debian
   fail: msg="These tasks should only be run on Debian/Ubuntu servers"
@@ -17,6 +17,14 @@
     path: /etc/fstab
     regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
     replace: '# \1'
+
+# Install NGINX Controller prerequisites
+- name: Update repositories cache and install "jq" package
+  apt:
+    pkg: 
+      - jq
+    state: latest
+    update_cache: yes
 
 # - name: Wait for any possibly running unattended upgrade to finish
 #   raw: systemd-run --property="After=apt-daily.service apt-daily-upgrade.service" --wait /bin/true

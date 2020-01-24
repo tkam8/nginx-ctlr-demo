@@ -1,0 +1,76 @@
+---
+
+# Check systems are debian (ubuntu) 
+- name: Fail if not running on Debian
+  fail: msg="These tasks should only be run on Debian/Ubuntu servers"
+  when: ansible_os_family != "Debian"
+
+# Install prerequisites for postgresql_db ansible module
+- name: Update repositories cache and install latest "psycopg2" package
+  apt:
+    pkg: 
+      - python-psycopg2
+    state: latest
+    update_cache: yes
+
+# Ensure latest versions of prerequisites for PostgreSQL
+- name: Update repositories cache and install latest prerequisite packages
+  apt:
+    pkg: 
+      - bash
+      - openssl
+      - libssl-dev
+      - libssl-doc
+      - libpq-dev
+    state: latest
+    update_cache: yes
+
+# Install PostgreSQL
+- name: Install PostgreSQL
+  apt:
+    pkg: 
+      - postgresql
+      - postgresql-contrib
+    state: latest
+    update_cache: yes
+
+# Ensure the PostgreSQl service is running
+- name: Ensure the PostgreSQl service is running
+  service:
+    name: postgresql
+    state: started
+    enabled: yes
+
+# Create PostgreSQL database
+- name: Ensure the PostgreSQl database is created
+  become: true
+  become_user: postgres
+  postgresql_db:
+    name: db1
+    encoding: UTF-8
+    lc_collate: de_DE.UTF-8
+    lc_ctype: de_DE.UTF-8
+    template: template0
+    state: present
+
+# Add a user (role) to PostgreSQL server instance
+- name: Ensure new user has access to db
+  become: true
+  become_user: postgres
+  postgresql_user:
+    db: db1
+    name: terry
+    password: "{{ POSTGRESQL_PASSWORD }}"
+    priv: "ALL"
+    state: present
+    expires: infinity
+
+# Modify PostgreSQL user (role)
+- name: Ensure new user has access to db
+  become: true
+  become_user: postgres
+  postgresql_user:
+    db: db1
+    name: terry
+    role_attr_flags: CREATEDB
+    state: present

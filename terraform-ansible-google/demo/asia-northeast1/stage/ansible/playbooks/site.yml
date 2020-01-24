@@ -9,8 +9,17 @@
   connection: ssh
   gather_facts: true
   roles: 
-    - ubuntu_initialize
+    - nginx_ctlr_initialize
 
+- name: Postgresql installation
+  hosts: gcp_nginx_controller_systems
+  become: yes
+  become_method: sudo
+  become_user: root
+  connection: ssh
+  gather_facts: true
+  roles: 
+    - postgresql_initialize
 
 # - name: GKE nginxweb
 #   hosts: gke_systems

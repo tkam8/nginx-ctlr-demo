@@ -33,9 +33,12 @@ steps:
 
 - name: Apply Ansible playbook (asia)
   image: tkam8/tfansible:latest
+  environment:
+    POSTGRESQL_PASS:
+      from_secret: postgresql_password
   commands: 
-  - ls terraform-ansible-google/demo/asia-northeast1/stage/ansible/
-  - cat terraform-ansible-google/demo/asia-northeast1/stage/ansible/playbooks/inventory/hosts
+  #- ls terraform-ansible-google/demo/asia-northeast1/stage/ansible/
+  #- cat terraform-ansible-google/demo/asia-northeast1/stage/ansible/playbooks/inventory/hosts
   - cd terraform-ansible-google/demo/asia-northeast1/stage/ansible/playbooks/
   - ansible-playbook --inventory inventory/hosts -vvvv site.yml
 
