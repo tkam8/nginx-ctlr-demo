@@ -14,7 +14,7 @@
     state: latest
     update_cache: yes
 
-# Install prerequisites for postgresql_db ansible module
+# Install prerequisites for postgresql_db ansible module using pip2
 - name: Update repositories cache and install latest "psycopg2" package
   pip:
     name: psycopg2
