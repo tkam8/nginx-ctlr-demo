@@ -6,6 +6,18 @@
   fail: msg="These tasks should only be run on Debian/Ubuntu servers"
   when: ansible_os_family != "Debian"
 
+#Disable swap since kubernetes can't work with swap enabled (in order for the kubelet to work properly)
+
+- name: Disable swap (if configured) (1/2)
+  command: swapoff -a
+  tags: ['skip_ansible_lint']
+
+- name: Disable swap in fstab (2/2)
+  replace:
+    path: /etc/fstab
+    regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
+    replace: '# \1'
+
 # - name: Wait for any possibly running unattended upgrade to finish
 #   raw: systemd-run --property="After=apt-daily.service apt-daily-upgrade.service" --wait /bin/true
 
