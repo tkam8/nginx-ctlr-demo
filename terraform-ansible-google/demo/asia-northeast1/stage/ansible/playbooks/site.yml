@@ -1,8 +1,8 @@
 
 ---
 
-- name: NGINX initialization
-  hosts: gcp_ubuntu_systems
+- name: NGINX Controller Initialization
+  hosts: gcp_nginx_controller_systems
   become: yes
   become_method: sudo
   become_user: root
