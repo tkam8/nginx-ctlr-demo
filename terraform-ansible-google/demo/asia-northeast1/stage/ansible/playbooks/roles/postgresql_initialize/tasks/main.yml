@@ -9,10 +9,9 @@
 - name: Update repositories cache and install latest "python-pip" package
   apt:
     pkg: 
-      - python-pip
-      - python-setuptools
+      - python3-pip
+      - python3-setuptools
     state: latest
-    update_cache: yes
 
 # Install prerequisites for postgresql_db ansible module using pip2
 - name: Update repositories cache and install latest "psycopg2" package
@@ -29,7 +28,6 @@
       - libssl-doc
       - libpq-dev
     state: latest
-    update_cache: yes
 
 # Install PostgreSQL
 - name: Install PostgreSQL
@@ -38,7 +36,6 @@
       - postgresql
       - postgresql-contrib
     state: latest
-    update_cache: yes
 
 # Ensure the PostgreSQl service is running
 - name: Ensure the PostgreSQl service is running
