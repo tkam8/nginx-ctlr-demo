@@ -26,6 +26,12 @@
     state: latest
     update_cache: yes
 
+# Install prerequisites for gcp_storage_object module using pip2
+- name: Install latest "google-auth" package
+  pip:
+    name: 
+      - google-auth
+
 # Copy over gcp creds file for gcp_storage_object module
 - name: Copy file with owner and permissions
   copy:
