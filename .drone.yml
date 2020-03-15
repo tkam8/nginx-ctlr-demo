@@ -25,11 +25,14 @@ steps:
   environment:
     GCE_SSH_KEY:
       from_secret: gcp_ssh_key
+    GOOGLE_CREDENTIALS:
+      from_secret: gcp_creds
   commands: 
   # Write the ssh key to disk
   - mkdir /drone/src/gcp
   - printenv GCE_SSH_KEY > /drone/src/gcp/gcp_ssh_key
   - chmod 400 /drone/src/gcp/gcp_ssh_key
+  - printenv GOOGLE_CREDENTIALS > /drone/src/gcp/gcp_creds.json
 
 - name: Apply Ansible playbook (asia)
   image: tkam8/tfansible:latest

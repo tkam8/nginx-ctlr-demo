@@ -26,6 +26,30 @@
     state: latest
     update_cache: yes
 
+# Copy over gcp creds file for gcp_storage_object module
+- name: Copy file with owner and permissions
+  copy:
+    src: /drone/src/gcp/gcp_creds.json
+    dest: /tmp/gcp_creds.json
+    owner: root
+    mode: '400'
+
+# Download the tarball from the google storage
+- name: Download v3 tarball
+  gcp_storage_object:
+    action: download
+    project: "{{ gcp_project }}"
+    auth_kind: serviceaccount
+    service_account_file: /tmp/gcp_creds.json
+    bucket: "{{ controller_bucket }}"
+    src: "{{ bucket_path }}"
+    dest: "{{ local_path }}"
+    overwrite: yes
+  register: ctlr_tarball
+
+- debug:
+    msg: "{{ ctlr_tarball }}"
+
 # - name: Wait for any possibly running unattended upgrade to finish
 #   raw: systemd-run --property="After=apt-daily.service apt-daily-upgrade.service" --wait /bin/true
 
