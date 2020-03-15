@@ -48,7 +48,6 @@
     auth_kind: serviceaccount
     service_account_file: /tmp/gcp_creds.json
     bucket: "{{ controller_bucket }}"
-    location: "{{ bucket_location }}"
     src: "{{ bucket_path }}"
     dest: "{{ local_path }}"
     overwrite: yes
