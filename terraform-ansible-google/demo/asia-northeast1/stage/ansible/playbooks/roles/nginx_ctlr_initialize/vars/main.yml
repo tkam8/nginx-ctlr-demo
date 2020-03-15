@@ -2,5 +2,6 @@
 
 gcp_project: "f5-gcs-4261-sales-apcj-japan"
 controller_bucket: "tky-nginx-ctlr-v3-demo"
+bucket_location: "asia-northeast1"
 bucket_path: "controller-installer-3.1.0.tar.gz"
 local_path: "/tmp/controller-installer-3.1.0.tar.gz"

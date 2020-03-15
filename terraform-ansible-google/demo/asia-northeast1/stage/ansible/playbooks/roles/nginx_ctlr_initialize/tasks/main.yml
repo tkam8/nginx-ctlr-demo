@@ -48,6 +48,7 @@
     auth_kind: serviceaccount
     service_account_file: /tmp/gcp_creds.json
     bucket: "{{ controller_bucket }}"
+    location: "{{ bucket_location }}"
     src: "{{ bucket_path }}"
     dest: "{{ local_path }}"
     overwrite: yes
@@ -55,6 +56,14 @@
 
 - debug:
     msg: "{{ ctlr_tarball }}"
+
+
+
+# Remove gcp creds file
+- name: Remove file (delete file)
+  file:
+    path: /tmp/gcp_creds.json
+    state: absent
 
 # - name: Wait for any possibly running unattended upgrade to finish
 #   raw: systemd-run --property="After=apt-daily.service apt-daily-upgrade.service" --wait /bin/true
