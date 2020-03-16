@@ -13,11 +13,6 @@
       - python3-setuptools
     state: latest
 
-# Install prerequisites for postgresql_db ansible module using pip2
-- name: Update repositories cache and install latest "psycopg2" package
-  pip:
-    name: psycopg2
-
 # Ensure latest versions of prerequisites for PostgreSQL
 - name: Update repositories cache and install latest prerequisite packages
   apt:
@@ -28,6 +23,11 @@
       - libssl-doc
       - libpq-dev
     state: latest
+
+# Install prerequisites for postgresql_db ansible module using pip2
+- name: Update repositories cache and install latest "psycopg2" package
+  pip:
+    name: psycopg2
 
 # Install PostgreSQL
 - name: Install PostgreSQL
