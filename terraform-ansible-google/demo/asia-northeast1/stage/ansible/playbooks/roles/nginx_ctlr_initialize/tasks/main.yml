@@ -74,23 +74,23 @@
     path: /tmp/gcp_creds.json
     state: absent
 
-# Generate a password hash for use by su on controller https://docs.ansible.com/ansible/latest/modules/expect_module.html 
-- name: generate password hash # https://askubuntu.com/questions/982804/mkpasswd-m-sha-512-produces-incorrect-login
-  expect:
-    echo: yes
-    command: /bin/bash -c "mkpasswd --method=sha-512 | sed 's/$/\\$/g'"
-    responses:
-      (?i)password: "{{ su_password }}"
-  register: password_hash
+# # Generate a password hash for use by su on controller https://docs.ansible.com/ansible/latest/modules/expect_module.html 
+# - name: generate password hash # https://askubuntu.com/questions/982804/mkpasswd-m-sha-512-produces-incorrect-login
+#   expect:
+#     echo: yes
+#     command: /bin/bash -c "mkpasswd --method=sha-512 | sed 's/$/\\$/g'"
+#     responses:
+#       (?i)password: "{{ su_password }}"
+#   register: password_hash
 
-- debug:
-    var: password_hash.stdout_lines[1]
+# - debug:
+#     var: password_hash.stdout_lines[1]
 
 # Supporting su requirement for Controller installer role
 - name: set root password to support su for Controller installation with Ubuntu
   user:
     name: root
-    password: "{{ password_hash.stdout_lines[1] }}"
+    password: "{{ su_password | password_hash('sha512') }}"
 
 # Troubleshoot tasks below if wanting to deal with the unattended upgrades on boot
 # - name: Wait for any possibly running unattended upgrade to finish
