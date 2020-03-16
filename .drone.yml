@@ -39,7 +39,12 @@ steps:
   environment:
     POSTGRESQL_PASS:
       from_secret: postgresql_password
+    NGINX_SU_PASS:
+      from_secret: nginx_su_password
+    CONTROLLER_PASS:
+      from_secret: controller_password
   commands: 
+  - ansible-galaxy install --roles-path terraform-ansible-google/demo/asia-northeast1/stage/ansible/playbooks/roles/ nginxinc.nginx_controller_install
   #- cat terraform-ansible-google/demo/asia-northeast1/stage/ansible/playbooks/inventory/hosts
   - cat terraform-ansible-google/demo/asia-northeast1/stage/ansible/playbooks/group_vars/F5_systems/vars
   - cd terraform-ansible-google/demo/asia-northeast1/stage/ansible/playbooks/

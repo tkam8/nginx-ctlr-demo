@@ -1,0 +1,10 @@
+---
+
+# pull the install log for review
+- name: fetch the install log
+  fetch:
+    src: /var/log/nginx-controller/nginx-controller-install.log
+    dest: "{{playbook_dir}}/logs/"
+
+- debug: 
+    msg: "NGINX Controller installation results: {{lookup('file', '{{playbook_dir}}/logs/nginx-controller-install.log') }}"

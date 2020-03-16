@@ -1,6 +1,12 @@
 
 ---
 
+- name: Password generation
+  hosts: localhost
+  gather_facts: false
+  roles: 
+    - password_gen
+
 - name: NGINX Controller Initialization
   hosts: gcp_nginx_controller_systems
   become: yes
@@ -20,6 +26,55 @@
   gather_facts: true
   roles: 
     - postgresql_initialize
+
+- name: NGINX Controller Installation
+  hosts: gcp_nginx_controller_systems
+  remote_user: ubuntu
+  hosts: controller
+  become: yes
+  become_user: ubuntu
+  become_method: su  # note that the become method is required to be su, you will need to support that for your distribution.
+  gather_facts: false
+  # Using previously installed galaxy role
+  roles:
+    - nginxinc.nginx_controller_install
+  vars:
+    - ctrl_tarball_src: "/tmp/controller-installer-3.1.0.tar.gz"
+    - ctrl_install_path: /home/ubuntu
+    - remote_src: yes
+    - db_host: dbhost.example.com
+    - db_port: "5432"
+    - db_user: "terry"
+    - db_password: "{{ lookup('env', 'POSTGRESQL_PASS') }}"
+    - tsdb_volume_type: local
+    # - tsdb_nfs_path: "/controllerdb"
+    # - tsdb_nfs_host: storage.internal
+    - smtp_host: "localhost"
+    - smtp_port: "25"
+    - smtp_authentication: false
+    - smtp_use_tls: false
+    - noreply_address: "noreply@example.com"
+    - fqdn:  controller.example.com
+    - organization_name: "F5"
+    - admin_firstname: "f5"
+    - admin_lastname: "f5demo"
+    - admin_email: "f5demo@example.com"
+    - admin_password: "{{ lookup('env', 'CONTROLLER_PASS') }}"
+    - self_signed_cert: true
+    - overwrite_existing_configs: true
+    - auto_install_docker: true
+    - controller_tarball: "controller-installer-3.1.0.tar.gz"
+    - ansible_python_interpreter: /usr/bin/python3
+
+
+- name: NGINX Controller Post Installation Tasks
+  hosts: gcp_nginx_controller_systems
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  gather_facts: false
+  roles: 
+    - nginx_ctlr_post
 
 # - name: GKE nginxweb
 #   hosts: gke_systems

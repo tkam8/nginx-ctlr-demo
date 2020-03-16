@@ -57,13 +57,13 @@
     state: present
 
 # Add a user (role) to PostgreSQL server instance
-- name: Ensure new user has access to db
+- name: Add new user to db
   become: true
   become_user: postgres
   postgresql_user:
     db: db1
     name: terry
-    password: "{{ POSTGRESQL_PASSWORD }}"
+    password: "{{ lookup('env', 'POSTGRESQL_PASS') }}"
     priv: ALL
     state: present
     expires: infinity

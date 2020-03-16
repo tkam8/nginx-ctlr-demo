@@ -1,0 +1,3 @@
+---
+
+su_password: "{{ lookup('env', 'NGINX_SU_PASS') }}"

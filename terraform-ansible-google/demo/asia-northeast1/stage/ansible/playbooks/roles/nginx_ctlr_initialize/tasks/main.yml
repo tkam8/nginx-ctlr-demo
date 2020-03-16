@@ -19,13 +19,26 @@
     replace: '# \1'
 
 # Install NGINX Controller prerequisites
-- name: Update repositories cache and install "jq" package
+- name:  make sure all the prerequisites are present on the remote
   apt:
-    pkg: 
-      - jq
-      - python3-pip
-    state: latest
+    name: "{{ packages }}"
+    state: present
     update_cache: yes
+  vars:
+    packages:
+    - jq
+    - python3-pip
+    - gettext
+    - bash
+    - gzip
+    - coreutils
+    - grep
+    - less
+    - sed
+    - tar
+    - python-pexpect  # to support ansible
+    - nfs-common  # to support nfs remote volume
+  tags: packages
 
 # Install prerequisites for gcp_storage_object module using pip2
 - name: Install latest "google-auth" package
@@ -51,32 +64,8 @@
   shell: gsutil cp gs://{{ controller_bucket }}/{{ bucket_path }} {{ local_path }}
   register: ctlr_tarball
 
-- debug:
-    msg: "{{ ctlr_tarball }}"
-
-# # Download the tarball from the google storage
-# - name: Download v3 tarball
-#   gcp_storage_object:
-#     action: download
-#     project: "{{ gcp_project }}"
-#     auth_kind: serviceaccount
-#     service_account_file: /tmp/gcp_creds.json
-#     scopes:
-#       - 'https://www.googleapis.com/auth/cloud-platform'
-#       - 'https://www.googleapis.com/auth/cloud-platform.read-only'
-#       - 'https://www.googleapis.com/auth/devstorage.full_control'
-#       - 'https://www.googleapis.com/auth/devstorage.read_only'
-#       - 'https://www.googleapis.com/auth/devstorage.read_write'
-#     bucket: "{{ controller_bucket }}"
-#     src: "{{ bucket_path }}"
-#     dest: "{{ local_path }}"
-#     overwrite: yes
-#   register: ctlr_tarball
-
 # - debug:
 #     msg: "{{ ctlr_tarball }}"
-
-
 
 # Remove gcp creds file
 - name: Remove file (delete file)
@@ -84,6 +73,13 @@
     path: /tmp/gcp_creds.json
     state: absent
 
+# Supporting su requirement for Controller installer role
+- name: set root password to support su for Controller installation with Ubuntu
+  user:
+    name: root
+    password: hostvars['localhost']['password_hash'].stdout_lines[1]
+
+# Troubleshoot tasks below if wanting to deal with the unattended upgrades on boot
 # - name: Wait for any possibly running unattended upgrade to finish
 #   raw: systemd-run --property="After=apt-daily.service apt-daily-upgrade.service" --wait /bin/true
 
