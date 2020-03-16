@@ -41,11 +41,11 @@
     - nfs-common  # to support nfs remote volume
   tags: packages
 
-# Install prerequisites for gcp_storage_object module using pip2
-- name: Install latest "google-auth" package
+# Install prerequisites for expect module
+- name: Install pexpect package
   pip:
     name: 
-      - google-auth
+      - pexpect
 
 # Copy over gcp creds file for gcp_storage_object module
 - name: Copy file with owner and permissions
