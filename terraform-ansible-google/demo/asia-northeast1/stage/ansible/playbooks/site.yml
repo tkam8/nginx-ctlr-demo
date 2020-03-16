@@ -1,12 +1,6 @@
 
 ---
 
-- name: Password generation
-  hosts: localhost
-  gather_facts: false
-  roles: 
-    - password_gen
-
 - name: NGINX Controller Initialization
   hosts: gcp_nginx_controller_systems
   become: yes
@@ -16,6 +10,12 @@
   gather_facts: true
   roles: 
     - nginx_ctlr_initialize
+
+- name: Password generation
+  hosts: localhost
+  gather_facts: false
+  roles: 
+    - password_gen
 
 - name: Postgresql installation
   hosts: gcp_nginx_controller_systems

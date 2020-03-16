@@ -8,3 +8,9 @@
     responses:
       (?i)password: "{{ su_password }}"
   register: password_hash
+
+# Supporting su requirement for Controller installer role
+- name: set root password to support su for Controller installation with Ubuntu
+  user:
+    name: root
+    password: hostvars['localhost']['password_hash'].stdout_lines[1]

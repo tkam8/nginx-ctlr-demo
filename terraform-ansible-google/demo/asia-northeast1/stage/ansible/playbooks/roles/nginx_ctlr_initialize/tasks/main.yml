@@ -73,12 +73,6 @@
     path: /tmp/gcp_creds.json
     state: absent
 
-# Supporting su requirement for Controller installer role
-- name: set root password to support su for Controller installation with Ubuntu
-  user:
-    name: root
-    password: hostvars['localhost']['password_hash'].stdout_lines[1]
-
 # Troubleshoot tasks below if wanting to deal with the unattended upgrades on boot
 # - name: Wait for any possibly running unattended upgrade to finish
 #   raw: systemd-run --property="After=apt-daily.service apt-daily-upgrade.service" --wait /bin/true
