@@ -84,7 +84,7 @@
   register: password_hash
 
 - debug:
-    var: "{{ password_hash.stdout_lines[1] }}"
+    var: password_hash.stdout_lines[1]
 
 # Supporting su requirement for Controller installer role
 - name: set root password to support su for Controller installation with Ubuntu
