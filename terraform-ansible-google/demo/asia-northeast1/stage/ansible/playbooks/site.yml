@@ -31,7 +31,7 @@
   hosts: gcp_nginx_controller_systems
   remote_user: ubuntu
   become: yes
-  become_user: ubuntu
+  become_user: root
   become_method: su  # note that the become method is required to be su, you will need to support that for your distribution.
   connection: ssh
   gather_facts: false
