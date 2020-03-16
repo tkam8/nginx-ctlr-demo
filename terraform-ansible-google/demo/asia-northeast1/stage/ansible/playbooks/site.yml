@@ -64,6 +64,7 @@
     - auto_install_docker: true
     - controller_tarball: "controller-installer-3.1.0.tar.gz"
     - ansible_python_interpreter: /usr/bin/python3
+    - ansible_become_password: "{{ lookup('env', 'NGINX_SU_PASS') }}"
 
 
 - name: NGINX Controller Post Installation Tasks
