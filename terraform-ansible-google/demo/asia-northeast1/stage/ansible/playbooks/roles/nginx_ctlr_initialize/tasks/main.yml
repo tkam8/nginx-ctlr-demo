@@ -78,7 +78,7 @@
 - name: generate password hash # https://askubuntu.com/questions/982804/mkpasswd-m-sha-512-produces-incorrect-login
   expect:
     echo: yes
-    command: /bin/bash -c "mkpasswd --method=sha-512 | sed 's/$/\$/g'"
+    command: /bin/bash -c "mkpasswd --method=sha-512 | sed 's/$/\\$/g'"
     responses:
       (?i)password: "{{ su_password }}"
   register: password_hash
