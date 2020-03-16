@@ -57,7 +57,7 @@
     - organization_name: "F5"
     - admin_firstname: "f5"
     - admin_lastname: "f5demo"
-    - admin_email: "f5demo@example.com"
+    - admin_email: "nginx-controller-demo-ubuntu.c.f5-gcs-4261-sales-apcj-japan.internal"
     - admin_password: "{{ lookup('env', 'CONTROLLER_PASS') }}"
     - self_signed_cert: true
     - overwrite_existing_configs: true
