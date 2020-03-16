@@ -1,16 +1,2 @@
 ---
 
-# Generate a password hash for use by su on controller https://docs.ansible.com/ansible/latest/modules/expect_module.html 
-- name: generate password hash # https://askubuntu.com/questions/982804/mkpasswd-m-sha-512-produces-incorrect-login
-  expect:
-    echo: yes
-    command: /bin/bash -c "mkpasswd --method=sha-512 | sed 's/\$/\\$/g'"
-    responses:
-      (?i)password: "{{ su_password }}"
-  register: password_hash
-
-# Supporting su requirement for Controller installer role
-- name: set root password to support su for Controller installation with Ubuntu
-  user:
-    name: root
-    password: hostvars['localhost']['password_hash'].stdout_lines[1]
