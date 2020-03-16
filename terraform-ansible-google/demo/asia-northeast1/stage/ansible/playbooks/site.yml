@@ -29,7 +29,6 @@
 
 - name: NGINX Controller Installation
   hosts: gcp_nginx_controller_systems
-  remote_user: ubuntu
   become: yes
   become_user: root
   become_method: su  # note that the become method is required to be su, you will need to support that for your distribution.
@@ -69,7 +68,6 @@
 
 - name: NGINX Controller Post Installation Tasks
   hosts: gcp_nginx_controller_systems
-  remote_user: ubuntu
   become: yes
   become_method: sudo
   connection: ssh
