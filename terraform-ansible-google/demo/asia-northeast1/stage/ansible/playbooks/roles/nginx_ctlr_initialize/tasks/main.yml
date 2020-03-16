@@ -41,27 +41,40 @@
     owner: root
     mode: '400'
 
-# Download the tarball from the google storage
-- name: Download v3 tarball
-  gcp_storage_object:
-    action: download
-    project: "{{ gcp_project }}"
-    auth_kind: serviceaccount
-    service_account_file: /tmp/gcp_creds.json
-    scopes:
-      - 'https://www.googleapis.com/auth/cloud-platform'
-      - 'https://www.googleapis.com/auth/cloud-platform.read-only'
-      - 'https://www.googleapis.com/auth/devstorage.full_control'
-      - 'https://www.googleapis.com/auth/devstorage.read_only'
-      - 'https://www.googleapis.com/auth/devstorage.read_write'
-    bucket: "{{ controller_bucket }}"
-    src: "{{ bucket_path }}"
-    dest: "{{ local_path }}"
-    overwrite: yes
+# Using gsutil (part of google sdk) command to download the files as other modules fail
+# First, authenticate with the service account credentials
+- name: init with service account json
+  shell: gcloud auth activate-service-account --key-file /tmp/gcp_creds.json
+
+# Download the file to /tmp
+- name: init with service account json
+  shell: gsutil cp gs://{{ controller_bucket }}/{{ bucket_path }} {{ local_path }}
   register: ctlr_tarball
 
 - debug:
     msg: "{{ ctlr_tarball }}"
+
+# # Download the tarball from the google storage
+# - name: Download v3 tarball
+#   gcp_storage_object:
+#     action: download
+#     project: "{{ gcp_project }}"
+#     auth_kind: serviceaccount
+#     service_account_file: /tmp/gcp_creds.json
+#     scopes:
+#       - 'https://www.googleapis.com/auth/cloud-platform'
+#       - 'https://www.googleapis.com/auth/cloud-platform.read-only'
+#       - 'https://www.googleapis.com/auth/devstorage.full_control'
+#       - 'https://www.googleapis.com/auth/devstorage.read_only'
+#       - 'https://www.googleapis.com/auth/devstorage.read_write'
+#     bucket: "{{ controller_bucket }}"
+#     src: "{{ bucket_path }}"
+#     dest: "{{ local_path }}"
+#     overwrite: yes
+#   register: ctlr_tarball
+
+# - debug:
+#     msg: "{{ ctlr_tarball }}"
 
 
 
