@@ -78,6 +78,17 @@
     role_attr_flags: CREATEDB
     state: present
 
+
+- name: update postgres client configuration
+  copy: 
+    src: files/pg_hba.conf 
+    dest: /etc/postgresql/10/main/pg_hba.conf
+  sudo: True
+  notify:
+    - restart postgresql
+  tags:
+    - postgres
+
 # Modify the postgres config to allow connections on private ip
 - name: change listen_addresses to '*'
   lineinfile: 
