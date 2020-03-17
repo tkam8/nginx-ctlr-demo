@@ -78,6 +78,12 @@
 
 # License NGINX Controller
 - name: Retrieve the NGINX Controller auth token
+  hosts: gcp_nginx_controller_systems
+  become: yes
+  become_user: root
+  become_method: su
+  connection: ssh
+  gather_facts: false
   roles:
     - nginxinc.nginx-controller-generate-token
   vars:
@@ -86,6 +92,12 @@
     controller_fqdn: "ctlr1.nginx.local"
 
 - name: Push the NGINX Controller license to your instance
+  hosts: gcp_nginx_controller_systems
+  become: yes
+  become_user: root
+  become_method: su
+  connection: ssh
+  gather_facts: false
   roles: 
     - nginxinc.nginx-controller-license
   vars:
