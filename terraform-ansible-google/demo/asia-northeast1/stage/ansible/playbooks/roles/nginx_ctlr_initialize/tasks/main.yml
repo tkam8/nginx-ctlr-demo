@@ -92,6 +92,20 @@
     name: root
     password: "{{ su_password | password_hash('sha512') }}"
 
+# Since the default GCP fqdn is too long, let's make a shorter name in etc/hosts
+- name: add a list of hosts to /etc/hosts
+  become: yes
+  lineinfile:
+    dest: /etc/hosts
+    regexp: "^{{ item['ip'] }}.*$"
+    line: "{{ item['ip'] }}\t\t{{ item['names'] | join(' ') }}"
+    state: present
+  with_items:
+  - ip: 127.0.0.1
+    names:
+    - ctlr1.nginx.local
+
+
 # Troubleshoot tasks below if wanting to deal with the unattended upgrades on boot
 # - name: Wait for any possibly running unattended upgrade to finish
 #   raw: systemd-run --property="After=apt-daily.service apt-daily-upgrade.service" --wait /bin/true

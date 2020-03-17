@@ -53,7 +53,7 @@
     - smtp_authentication: false
     - smtp_use_tls: false
     - noreply_address: "noreply@example.com"
-    - fqdn:  nginx-controller-demo-ubuntu.c.f5-gcs-4261-sales-apcj-japan.internal
+    - fqdn:  ctlr1.nginx.local
     - organization_name: "F5"
     - admin_firstname: "f5"
     - admin_lastname: "f5demo"
