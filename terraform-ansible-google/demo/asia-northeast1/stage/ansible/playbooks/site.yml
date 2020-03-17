@@ -85,7 +85,7 @@
   connection: ssh
   gather_facts: false
   roles:
-    - nginxinc.nginx-controller-generate-token
+    - nginxinc.nginx_controller_generate_token
   vars:
     user_email: "f5demo@example.com"
     user_password: "{{ lookup('env', 'CONTROLLER_PASS') }}"
@@ -99,7 +99,7 @@
   connection: ssh
   gather_facts: false
   roles: 
-    - nginxinc.nginx-controller-license
+    - nginxinc.nginx_controller_license
   vars:
     # controller_auth_token: output by previous role in example
     license: "/tmp/controller_license202006.txt"
