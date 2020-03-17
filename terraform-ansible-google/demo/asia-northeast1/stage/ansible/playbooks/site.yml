@@ -87,9 +87,10 @@
   roles:
     - nginxinc.nginx_controller_generate_token
   vars:
-    user_email: "f5demo@example.com"
-    user_password: "{{ lookup('env', 'CONTROLLER_PASS') }}"
-    controller_fqdn: "ctlr1.nginx.local"
+    - user_email: "f5demo@example.com"
+    - user_password: "{{ lookup('env', 'CONTROLLER_PASS') }}"
+    - controller_fqdn: "ctlr1.nginx.local"
+    - ansible_become_password: "{{ lookup('env', 'NGINX_SU_PASS') }}"
 
 - name: Push the NGINX Controller license to your instance
   hosts: gcp_nginx_controller_systems
@@ -102,7 +103,8 @@
     - nginxinc.nginx_controller_license
   vars:
     # controller_auth_token: output by previous role in example
-    license: "/tmp/controller_license202006.txt"
+    - license: "/tmp/controller_license202006.txt"
+    - ansible_become_password: "{{ lookup('env', 'NGINX_SU_PASS') }}"
 
 # - name: GKE nginxweb
 #   hosts: gke_systems
