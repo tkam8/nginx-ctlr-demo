@@ -104,6 +104,8 @@
   - ip: 127.0.0.1
     names:
     - ctlr1.nginx.local
+    - localhost
+    - nginx-controller-demo-ubuntu
 
 
 # Troubleshoot tasks below if wanting to deal with the unattended upgrades on boot
