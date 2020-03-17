@@ -30,6 +30,7 @@ inputs = {
   zone                 = "asia-northeast1-b"
   network              = dependency.vpc.outputs.network
   subnetwork           = dependency.vpc.outputs.public_subnetwork
-  ubuntu_instance_type = "n1-standard-4"
+  ubuntu_instance_type = "n1-highcpu-8"
+  disk_size            = 80
   app_tag_value        = "nginxctlrdemo"
 }
