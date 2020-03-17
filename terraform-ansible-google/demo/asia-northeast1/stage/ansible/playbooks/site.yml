@@ -76,6 +76,22 @@
   roles: 
     - nginx_ctlr_post
 
+# License NGINX Controller
+- name: Retrieve the NGINX Controller auth token
+  include_role:
+    name: nginxinc.nginx-controller-generate-token
+  vars:
+    user_email: "f5demo@example.com"
+    user_password: "{{ lookup('env', 'CONTROLLER_PASS') }}"
+    controller_fqdn: "ctlr1.nginx.local"
+
+- name: Push the NGINX Controller license to your instance
+  include_role:
+    name: nginxinc.nginx-controller-license
+  vars:
+    # controller_auth_token: output by previous role in example
+    license: "/tmp/controller_license202006.txt"
+
 # - name: GKE nginxweb
 #   hosts: gke_systems
 #   connection: local
