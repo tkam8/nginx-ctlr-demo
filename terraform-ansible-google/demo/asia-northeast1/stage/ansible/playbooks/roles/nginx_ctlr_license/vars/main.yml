@@ -2,4 +2,5 @@
 # controller_auth_token: output by previous role in example
 api_version: "api/v1"
 license: "/tmp/controller_license202006.txt"
+controller_fqdn: "ctlr1.nginx.local"
 ansible_become_password: "{{ lookup('env', 'NGINX_SU_PASS') }}"
