@@ -9,7 +9,7 @@
     url: "https://{{ controller_fqdn }}/{{ api_version }}/platform/license-file"
     method: POST
     body_format: json
-    src: "{{ license | string | b64encode }}"
+    src: "{{ license }}"
     remote_src: yes
     return_content: true
     status_code: 200
