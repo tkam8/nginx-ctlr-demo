@@ -1,0 +1,30 @@
+---
+
+
+
+# License file is already downloaded in /tmp dir from nginx_ctlr_initialize role
+# License using license file, setting remote_src yes so it looks on the controller
+- name: POST from contents of remote file
+  uri:
+    url: "https://localhost/{{ api_version }}/platform/license-file"
+    method: POST
+    body_format: json
+    src: "{{ license }}"
+    remote_src: yes
+    return_content: true
+    status_code: 200
+    validate_certs: false
+    headers:
+      Cookie: "{{ controller_auth_token }}"
+  register: controller_response
+    
+# Get status of licensing task
+- name: GET NGINX Controller license status
+  uri:
+    url: "https://localhost/{{ api_version }}/platform/license"
+    method: GET
+    status_code: 200
+    validate_certs: false
+    headers:
+      Cookie: "{{ controller_auth_token }}"
+  register: controller_license

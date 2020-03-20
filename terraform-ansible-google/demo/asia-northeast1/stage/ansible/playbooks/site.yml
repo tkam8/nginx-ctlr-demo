@@ -92,7 +92,7 @@
     - controller_fqdn: "ctlr1.nginx.local"
     - ansible_become_password: "{{ lookup('env', 'NGINX_SU_PASS') }}"
 
-- name: Push the NGINX Controller license to your instance
+- name: License NGINX Controller using file downloaded from GCP storage
   hosts: gcp_nginx_controller_systems
   become: yes
   become_user: root
@@ -100,12 +100,8 @@
   connection: ssh
   gather_facts: false
   roles: 
-    - nginxinc.nginx_controller_license
-  vars:
-    # controller_auth_token: output by previous role in example
-    - license: "/tmp/controller_license202006.txt"
-    - controller_fqdn: "ctlr1.nginx.local"
-    - ansible_become_password: "{{ lookup('env', 'NGINX_SU_PASS') }}"
+    - nginx_ctlr_license
+
 
 # - name: GKE nginxweb
 #   hosts: gke_systems

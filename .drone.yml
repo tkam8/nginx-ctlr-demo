@@ -47,7 +47,6 @@ steps:
   # Ansible complains that the drone generated netrc file being too permissive by default
   - chmod 600 /root/.netrc
   - ansible-galaxy install --roles-path terraform-ansible-google/demo/asia-northeast1/stage/ansible/playbooks/roles/ nginxinc.nginx_controller_generate_token
-  - ansible-galaxy install --roles-path terraform-ansible-google/demo/asia-northeast1/stage/ansible/playbooks/roles/ nginxinc.nginx_controller_license
   - ansible-galaxy install --roles-path terraform-ansible-google/demo/asia-northeast1/stage/ansible/playbooks/roles/ nginxinc.nginx_controller_install
   #- cat terraform-ansible-google/demo/asia-northeast1/stage/ansible/playbooks/inventory/hosts
   - cat terraform-ansible-google/demo/asia-northeast1/stage/ansible/playbooks/group_vars/F5_systems/vars
