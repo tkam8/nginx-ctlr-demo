@@ -1,0 +1,3 @@
+{
+"content": '"{{ license_body }}"'
+}
