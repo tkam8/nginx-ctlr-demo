@@ -15,6 +15,9 @@
 - debug:
     var: license_body
 
+- debug: 
+    msg: "{{ lookup('template', '{{ role_path }}/templates/license.tpl') }}"
+
 # License file is already downloaded in /tmp dir from nginx_ctlr_initialize role
 # License using license file, setting remote_src yes so it looks on the controller
 - name: POST from contents of file
