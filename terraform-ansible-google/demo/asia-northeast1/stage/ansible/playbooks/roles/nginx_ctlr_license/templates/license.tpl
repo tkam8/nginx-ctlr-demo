@@ -1,3 +1,0 @@
-{
-"content": "{{ license_body }}"
-}
