@@ -14,12 +14,12 @@
 
 # License file is already downloaded in /tmp dir from nginx_ctlr_initialize role
 # License using license file, setting remote_src yes so it looks on the controller
-- name: POST from contents of remote file
+- name: POST from contents of file
   uri:
     url: "https://{{ controller_fqdn }}/{{ api_version }}/platform/license-file"
     method: POST
     body_format: json
-    src: templates/license.j2
+    src: "{{ role_path }}"/templates/license.j2
     return_content: true
     status_code: 200
     validate_certs: false
