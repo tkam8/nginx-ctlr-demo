@@ -25,7 +25,7 @@
     url: "https://{{ controller_fqdn }}/{{ api_version }}/platform/license-file"
     method: POST
     body_format: json
-    src: "{{ role_path }}/templates/license.tpl"
+    body: "{{ role_path }}/templates/license.tpl"
     return_content: true
     status_code: 200
     validate_certs: false
