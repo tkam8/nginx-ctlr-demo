@@ -65,10 +65,6 @@
   shell: gsutil cp gs://{{ controller_bucket }}/{{ controller_bucket_path }} {{ controller_local_path }}
   register: ctlr_tarball
 
-# Download the controller license file to /tmp
-- name: init with service account json
-  shell: gsutil cp gs://{{ controller_bucket }}/{{ controller_license_bucket_path }} {{ controller_license_local_path }}
-  register: ctlr_license
 
 # - debug:
 #     msg: "{{ ctlr_tarball }}"
