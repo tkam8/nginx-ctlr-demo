@@ -24,7 +24,9 @@
   uri:
     url: "https://{{ controller_fqdn }}/{{ api_version }}/platform/license-file"
     method: POST
-    body: "{{ lookup('file','{{ role_path }}/templates/license.tpl') }}"
+    body_format: json
+    body: 
+      content: "{{ lookup('file','{{ role_path }}/templates/license.tpl') }}"
     return_content: true
     status_code: 200
     validate_certs: false
