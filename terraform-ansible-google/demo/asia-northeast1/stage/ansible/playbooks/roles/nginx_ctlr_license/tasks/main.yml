@@ -12,11 +12,11 @@
   register: ctlr_license
   delegate_to: localhost
 
-- debug:
-    var: license_body
+# - debug:
+#     var: license_body
 
-- debug: 
-    msg: "{{ lookup('template', '{{ role_path }}/templates/license.tpl') }}"
+# - debug: 
+#     msg: "{{ lookup('template', '{{ role_path }}/templates/license.tpl') }}"
 
 # License file is already downloaded in /tmp dir from nginx_ctlr_initialize role
 # License using license file, setting remote_src yes so it looks on the controller
@@ -25,7 +25,7 @@
     url: "https://{{ controller_fqdn }}/{{ api_version }}/platform/license-file"
     method: POST
     body_format: json
-    body: "{{ role_path }}/templates/license.tpl"
+    body: "{{ lookup('file','{{ role_path }}/templates/license.tpl') }}"
     return_content: true
     status_code: 200
     validate_certs: false
