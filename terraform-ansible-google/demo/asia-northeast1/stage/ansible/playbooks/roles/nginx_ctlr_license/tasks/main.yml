@@ -1,6 +1,16 @@
 ---
 
+# Using gsutil (part of google sdk) command to download the files as other modules fail
+# First, authenticate with the service account credentials
+- name: Activate gcloud auth with service account json
+  shell: gcloud auth activate-service-account --key-file /drone/src/gcp/gcp_creds.json
+  delegate_to: localhost
 
+# Download the controller license file to the localhost (Ansible controller) /tmp
+- name: Download controller license file to Ansible controller
+  shell: gsutil cp gs://{{ controller_bucket }}/{{ controller_license_bucket_path }} {{ controller_license_local_path }}
+  register: ctlr_license
+  delegate_to: localhost
 
 # License file is already downloaded in /tmp dir from nginx_ctlr_initialize role
 # License using license file, setting remote_src yes so it looks on the controller
@@ -9,8 +19,7 @@
     url: "https://{{ controller_fqdn }}/{{ api_version }}/platform/license-file"
     method: POST
     body_format: json
-    src: "{{ license }}"
-    remote_src: yes
+    src: templates/license.j2
     return_content: true
     status_code: 200
     validate_certs: false
