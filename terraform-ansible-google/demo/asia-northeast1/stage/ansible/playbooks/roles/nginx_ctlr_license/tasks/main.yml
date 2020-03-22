@@ -19,7 +19,7 @@
 #     msg: "{{ lookup('template', '{{ role_path }}/templates/license.tpl') }}"
 
 # License file is already downloaded in /tmp dir from nginx_ctlr_initialize role
-# License using license file, setting remote_src yes so it looks on the controller
+# body content will be formatted in json, which is the expected key/value by NGINX controller
 - name: POST from contents of file
   uri:
     url: "https://{{ controller_fqdn }}/{{ api_version }}/platform/license-file"
