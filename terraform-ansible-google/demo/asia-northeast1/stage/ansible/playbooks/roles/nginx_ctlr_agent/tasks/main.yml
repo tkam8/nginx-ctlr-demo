@@ -59,9 +59,9 @@
   debug:
     msg: "{{ location }}"
 
-# - name: Output agent install results
-#   debug:
-#     msg: "{{ instance_name }}"
+- name: Output agent install results
+  debug:
+    msg: "{{ instance_name }}"
 
 - name: Run the NGINX Controller agent installer
   shell: |
