@@ -106,7 +106,7 @@
 - name: Install NGINX Controller Agents
   hosts: gcp_nginx_systems
   become: yes
-  gather_facts: false
+  gather_facts: true
   roles: 
     - nginx_ctlr_agent
 
