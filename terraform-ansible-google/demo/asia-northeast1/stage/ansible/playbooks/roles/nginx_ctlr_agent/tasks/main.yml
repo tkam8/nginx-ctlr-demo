@@ -66,11 +66,11 @@
 - name: Run the NGINX Controller agent installer
   shell: |
     API_KEY='{{ api_key }}' \
-    {{ (controller_hostname | length > 0) | ternary('CONTROLLER_HOSTNAME=' + controller_hostname,'') }} \
-    {{ (controller_hostname | length > 0) | ternary('STORE_UUID=True','') }} \
+    "{{ (controller_hostname | length > 0) | ternary('CONTROLLER_HOSTNAME=' + controller_hostname,'') }}" \
+    "{{ (controller_hostname | length > 0) | ternary('STORE_UUID=True','') }}" \
     sh ./install.sh -y \
-    {{ (location | length > 0) | ternary('-l ' + location,'') }} \
-    {{ (instance_name | length > 0) | ternary('-i ' + instance_name,'') }}
+    "{{ (location | length > 0) | ternary('-l ' + location,'') }}" \
+    "{{ (instance_name | length > 0) | ternary('-i ' + instance_name,'') }}"ß
   args:
     chdir: "{{ ansible_env.HOME }}"
     creates: /var/log/nginx-controller/agent.log
