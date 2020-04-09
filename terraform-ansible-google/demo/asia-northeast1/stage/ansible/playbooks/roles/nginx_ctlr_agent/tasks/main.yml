@@ -1,5 +1,10 @@
 ---
 
+#debug variabls
+- name: Debug variables here
+  debug:
+    msg: "{{ hostvars['localhost'] }}"
+
 # Install controller agent on NGINX+
 - name: Get NGINX Controller API key for agent registration
   uri:
