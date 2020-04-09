@@ -1,0 +1,4 @@
+---
+# controller_auth_token: output by previous role in example
+api_version: "api/v1"
+controller_fqdn: "nginx-controller-demo-ubuntu.c.f5-gcs-4261-sales-apcj-japan.internal"

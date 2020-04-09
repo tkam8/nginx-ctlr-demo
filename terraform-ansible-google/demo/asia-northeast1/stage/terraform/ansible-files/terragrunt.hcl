@@ -32,6 +32,16 @@ dependency "controller" {
   }
 }
 
+dependency "nginx" {
+  config_path = "../functions/nginx"
+
+  mock_outputs = {
+    nginx_instance    = "instanceSelfLink"
+    nginx_public_ip   = "6.6.6.6"
+    nginx_private_ip  = "5.5.5.5"
+  }
+}
+
 dependency "gke" {
   config_path = "../functions/gke_cluster"
 
@@ -49,6 +59,8 @@ inputs = {
   nginx_controller_public_ip  = dependency.controller.outputs.ubuntu_public_ip
   gke_cluster_name            = dependency.gke.outputs.gke_cluster_name
   gke_endpoint                = dependency.gke.outputs.gke_endpoint
+  nginx_public_ip             = dependency.nginx.outputs.nginx_public_ip
+  nginx_private_ip            = dependency.nginx.outputs.nginx_private_ip
 
   app_tag_value         = "nginxctlrdemo"
   #use below var for multiple nginx deployements

@@ -102,6 +102,12 @@
   roles: 
     - nginx_ctlr_license
 
+# Install Controller Agents on NGINX+
+- name: Install NGINX Controller Agents
+  hosts: gcp_nginx_systems
+  gather_facts: false
+  roles: 
+    - nginx_ctlr_agent
 
 # - name: GKE nginxweb
 #   hosts: gke_systems
