@@ -29,6 +29,7 @@ dependency "controller" {
 
   mock_outputs = {
     ubuntu_public_ip   = "4.4.4.4"
+    ubuntu_private_ip   = "7.7.7.7"
   }
 }
 
