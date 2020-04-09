@@ -51,17 +51,17 @@
   register: controller_return
 
 # Debug variables used in the installer command
-- name: Output agent install results
+- name: Output agent controller_hostname
   debug:
-    var: "{{ controller_hostname }}"
+    msg: "{{ controller_hostname }}"
+
+- name: Output agent location
+  debug:
+    msg: "{{ location }}"
 
 - name: Output agent install results
   debug:
-    var: "{{ location }}"
-
-- name: Output agent install results
-  debug:
-    var: "{{ instance_name }}"
+    msg: "{{ instance_name }}"
 
 - name: Run the NGINX Controller agent installer
   shell: |
