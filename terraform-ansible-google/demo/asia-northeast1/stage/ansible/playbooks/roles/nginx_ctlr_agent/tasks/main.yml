@@ -63,6 +63,22 @@
   debug:
     msg: "{{ instance_name }}"
 
+# Since the default GCP fqdn is too long, let's make a shorter name in etc/hosts
+- name: add a list of hosts to /etc/hosts
+  become: yes
+  lineinfile:
+    dest: /etc/hosts
+    regexp: "^{{ item['ip'] }}.*$"
+    line: "{{ item['ip'] }}\t\t{{ item['names'] | join(' ') }}"
+    state: present
+  with_items:
+  - ip: 127.0.0.1
+    names:
+    - localhost
+    - "{{ controller_hostname }}"
+  - ip: "{{ groups['gcp_nginx_controller_systems'][0] }}"
+    - ctlr1.nginx.local
+
 - name: Run the NGINX Controller agent installer
   shell: |
     API_KEY='{{ api_key }}' \
