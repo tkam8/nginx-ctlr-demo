@@ -76,7 +76,7 @@
     names:
     - localhost
     - "{{ controller_hostname }}"
-  - ip: "{{ groups['gcp_nginx_controller_systems'][0] }}"
+  - ip: "{{ groups['gcp_nginx_controller_systems'][0].private_ip }}"
     names:
     - ctlr1.nginx.local
 

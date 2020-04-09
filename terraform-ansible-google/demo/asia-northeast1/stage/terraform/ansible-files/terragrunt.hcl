@@ -57,6 +57,7 @@ dependency "gke" {
 inputs = {
   terragrunt_path             = "${get_terragrunt_dir()}"
   nginx_controller_public_ip  = dependency.controller.outputs.ubuntu_public_ip
+  nginx_controller_private_ip = dependency.controller.outputs.ubuntu_private_ip
   gke_cluster_name            = dependency.gke.outputs.gke_cluster_name
   gke_endpoint                = dependency.gke.outputs.gke_endpoint
   nginx_public_ip             = dependency.nginx.outputs.nginx_public_ip
