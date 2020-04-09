@@ -50,6 +50,19 @@
     force: yes
   register: controller_return
 
+# Debug variables used in the installer command
+- name: Output agent install results
+  debug:
+    var: "{{ controller_hostname }}"
+
+- name: Output agent install results
+  debug:
+    var: "{{ location }}"
+
+- name: Output agent install results
+  debug:
+    var: "{{ instance_name }}"
+
 - name: Run the NGINX Controller agent installer
   shell: |
     API_KEY='{{ api_key }}' \
