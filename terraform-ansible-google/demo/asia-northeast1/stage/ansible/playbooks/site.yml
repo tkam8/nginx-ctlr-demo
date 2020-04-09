@@ -105,6 +105,7 @@
 # Install Controller Agents on NGINX+
 - name: Install NGINX Controller Agents
   hosts: gcp_nginx_systems
+  become: yes
   gather_facts: false
   roles: 
     - nginx_ctlr_agent
