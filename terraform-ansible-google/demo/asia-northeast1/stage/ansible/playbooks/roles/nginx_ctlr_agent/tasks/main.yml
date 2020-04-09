@@ -5,6 +5,10 @@
   debug:
     msg: "{{ hostvars['localhost'] }}"
 
+- name: Debug controller variables here
+  debug:
+    msg: "{{ hostvars['gcp_nginx_controller_systems'] }}"
+
 # Install controller agent on NGINX+
 - name: Get NGINX Controller API key for agent registration
   uri:
@@ -14,7 +18,7 @@
     status_code: 200
     validate_certs: false
     headers:
-      Cookie: "{{ controller_auth_token }}"
+      Cookie: "{{ hostvars['gcp_nginx_controller_systems']['0'].controller_auth_token }}"
   register: ctrl_globals
 
 - name: Copy api_key to a variable
