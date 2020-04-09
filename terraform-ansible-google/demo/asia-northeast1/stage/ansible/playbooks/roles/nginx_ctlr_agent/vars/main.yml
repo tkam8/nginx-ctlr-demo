@@ -4,7 +4,7 @@ api_version: "api/v1"
 controller_fqdn: "nginx-controller-demo-ubuntu.c.f5-gcs-4261-sales-apcj-japan.internal"
 # setting hostname of the remote nginx instance
 # Galaxy role defines this as "The name of the instance as reflected in NGINX Controller. Must be unique per instance."
-controller_hostname: "{{ ansible_hostname | join(' ') }}"
+controller_hostname: "{{ ansible_hostname | join('') }}"
 # Setting location to the group_names magic variable, which actually points to the ansible inventory group
 # Galaxy role defines this as: "The location in NGINX Controller this instance will be automatically added to. Otherwise the location will be 'unspecified' in NGINX Controller.""
 location: "{{ group_names | join(' ') }}"
