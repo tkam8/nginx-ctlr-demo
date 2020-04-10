@@ -1,9 +1,9 @@
 ---
 
 #debug variables
-- name: Debug variables here
-  debug:
-    msg: "{{ hostvars }}"
+# - name: Debug variables here
+#   debug:
+#     msg: "{{ hostvars }}"
 
 - name: Fail if required variables are not defined
   assert:
