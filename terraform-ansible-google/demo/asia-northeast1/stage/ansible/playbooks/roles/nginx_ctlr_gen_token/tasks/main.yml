@@ -30,4 +30,4 @@
 
 - name: Register token for use as cookie
   set_fact:
-    controller: "{{ controller | combine({'auth_token': controller_auth.set_cookie}) }}"
+    controller_auth_token: "{{ controller_auth.set_cookie }}"
