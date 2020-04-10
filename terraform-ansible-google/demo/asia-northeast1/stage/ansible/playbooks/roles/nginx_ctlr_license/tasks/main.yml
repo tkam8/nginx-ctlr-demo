@@ -22,7 +22,7 @@
 # body content will be formatted in json, which is the expected key/value by NGINX controller
 - name: POST from contents of file
   uri:
-    url: "https://{{ controller.fqdn }}/{{ api_version }}/platform/license-file"
+    url: "https://{{ controller_fqdn }}/{{ api_version }}/platform/license-file"
     method: POST
     body_format: json
     body: 
@@ -31,16 +31,16 @@
     status_code: 200
     validate_certs: false
     headers:
-      Cookie: "{{ controller.auth_token }}"
+      Cookie: "{{ controller_auth_token }}"
   register: controller_response
     
 # Get status of licensing task
 - name: GET NGINX Controller license status
   uri:
-    url: "https://{{ controller.fqdn }}/{{ api_version }}/platform/license"
+    url: "https://{{ controller_fqdn }}/{{ api_version }}/platform/license"
     method: GET
     status_code: 200
     validate_certs: false
     headers:
-      Cookie: "{{ controller.auth_token }}"
+      Cookie: "{{ controller_auth_token }}"
   register: controller_license

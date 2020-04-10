@@ -22,7 +22,7 @@
     status_code: 200
     validate_certs: false
     headers:
-      Cookie: "{{ hostvars[groups['gcp_nginx_controller_systems'][0]].controller.auth_token }}"
+      Cookie: "{{ hostvars[groups['gcp_nginx_controller_systems'][0]].controller_auth_token }}"
   register: ctrl_globals
 
 - name: Copy api_key to a variable

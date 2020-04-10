@@ -85,12 +85,7 @@
   connection: ssh
   gather_facts: false
   roles:
-    - nginxinc.nginx_controller_generate_token
-  vars:
-    - controller.user_email: "f5demo@example.com"
-    - controller.user_password: "{{ lookup('env', 'CONTROLLER_PASS') }}"
-    - controller.fqdn: "ctlr1.nginx.local"
-    - ansible_become_password: "{{ lookup('env', 'NGINX_SU_PASS') }}"
+    - nginx_ctlr_gen_token
 
 - name: License NGINX Controller using file downloaded from GCP storage
   hosts: gcp_nginx_controller_systems
@@ -106,7 +101,7 @@
 - name: Install NGINX Controller Agents
   hosts: gcp_nginx_systems
   become: yes
-  gather_facts: true
+  gather_facts: false
   roles: 
     - nginx_ctlr_agent
 

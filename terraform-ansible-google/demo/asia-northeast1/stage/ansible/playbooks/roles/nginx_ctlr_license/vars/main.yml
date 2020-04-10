@@ -1,7 +1,7 @@
 ---
 # controller_auth_token: output by previous role in example
 api_version: "api/v1"
-controller.fqdn: "ctlr1.nginx.local"
+controller_fqdn: "ctlr1.nginx.local"
 license: "/tmp/controller_license.base64.txt"
 license_body: "{{ lookup('file', controller_license_local_path) | b64encode }}"
 controller_bucket: "tky-nginx-ctlr-v3-demo"

@@ -1,0 +1,33 @@
+---
+
+#debug variables
+- name: Debug variables here
+  debug:
+    msg: "{{ hostvars }}"
+
+- name: Fail if required variables are not defined
+  assert:
+    that: ("{{ item }} is defined") and ("{{ item }} | length > 0")
+  loop:
+    - controller_fqdn
+    - controller_user_email
+    - controller_user_password
+
+- name: Login to Controller
+  uri:
+    url: "https://{{ controller_fqdn }}/{{ api_version }}/platform/login"
+    method: "POST"
+    body:
+      credentials:
+        type: "BASIC"
+        username: "{{ controller_user_email }}"
+        password: "{{ controller_user_password }}"
+    body_format: json
+    return_content: yes
+    status_code: 204
+    validate_certs: false
+  register: controller_auth
+
+- name: Register token for use as cookie
+  set_fact:
+    controller: "{{ controller | combine({'auth_token': controller_auth.set_cookie}) }}"
