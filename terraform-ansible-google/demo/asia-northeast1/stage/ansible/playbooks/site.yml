@@ -25,7 +25,7 @@
   connection: ssh
   gather_facts: true
   roles: 
-    - postgresql_initialize
+    - nginx_ctlr_postgresql_initialize
 
 - name: NGINX Controller Installation
   hosts: gcp_nginx_controller_systems
